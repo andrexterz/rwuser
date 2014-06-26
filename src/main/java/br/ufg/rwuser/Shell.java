@@ -24,7 +24,7 @@ public class Shell {
     public void list() {
         List<LdapInfo> users = LdapInfo.scanLdap();
         for (int i=0;i < users.size(); i++) {
-            System.out.format("%d - %s\n", i, users.get(i));
+            System.out.format("%4d - %s\n", i, users.get(i));
         }
     }
 
