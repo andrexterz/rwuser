@@ -4,6 +4,7 @@ import asg.cliche.Command;
 import asg.cliche.Param;
 import asg.cliche.ShellFactory;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Shell app to add users and profiles for reqweb - requisition system.
@@ -21,8 +22,9 @@ public class Shell {
     }
     @Command(description = "scans LDAP tree and prints users to the console")
     public void list() {
-        for (int i=0;i<10;i++) {
-            System.out.format("%0004d - xxxx", i);
+        List<LdapInfo> users = LdapInfo.scanLdap();
+        for (int i=0;i < users.size(); i++) {
+            System.out.format("%d - %s\n", i, users.get(i));
         }
     }
 
