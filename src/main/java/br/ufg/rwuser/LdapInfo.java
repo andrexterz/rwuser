@@ -16,6 +16,7 @@ import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
+import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchResult;
@@ -39,16 +40,18 @@ public class LdapInfo implements Serializable {
     static private DirContext ctx;
 
 
-    public  static List<LdapInfo> scanLdap() {
+    public  static List<LdapInfo> scanLdap(String username) {
         List<LdapInfo> usuarios = new ArrayList<>();
         Attributes matchAttrs = new BasicAttributes(false);
+        if (!username.isEmpty()) {
+            matchAttrs.put(new BasicAttribute("uid", username));
+        }
         String[] atributosRetorno = new String[]{"mail", "cn", "uid", "uidNumber", "gidNumber"};
-
         NamingEnumeration<?> resultado;
         try {
-            ctx = LdapServiceLocator.getInstance().getContext("", "");
+            ctx = LdapServiceLocator.getInstance().getContext(username);
             resultado = ctx.search(
-                    Configuration.getInstance().getValue("SEARCHBASE"),
+                    Configuration.getInstance().getValue("searchBase"),
                     matchAttrs,
                     atributosRetorno);
 

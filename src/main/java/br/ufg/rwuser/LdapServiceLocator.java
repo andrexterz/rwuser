@@ -33,20 +33,15 @@ public class LdapServiceLocator {
         return instance;
     }
 
-    public DirContext getContext(String usuario, String senha) throws NamingException {
-        Hashtable<String, String> env = new Hashtable<String, String>(11);
-        env.put(Context.INITIAL_CONTEXT_FACTORY, Configuration.getInstance().getValue("INITIAL_CTX"));
-        env.put(Context.PROVIDER_URL, Configuration.getInstance().getValue("SERVIDOR"));
-        env.put(Context.SECURITY_AUTHENTICATION, "simple");   //com none não confere senha // auf
-        env.put(Context.SECURITY_PRINCIPAL, usuario);        //auf
-        env.put(Context.SECURITY_CREDENTIALS, senha);      //auf
-
+    public DirContext getContext(String usuario) throws NamingException {
+        Hashtable<String, String> env = new Hashtable<>(11);
+        env.put(Context.INITIAL_CONTEXT_FACTORY, Configuration.getInstance().getValue("initialContext"));
+        env.put(Context.PROVIDER_URL, Configuration.getInstance().getValue("ldapServer"));
+        env.put(Context.SECURITY_AUTHENTICATION, "none");   //com none não confere senha // auf
+        env.put(Context.SECURITY_PRINCIPAL, usuario);
         DirContext ctx = null;
-
         // Obtem um Initial Context
         ctx = new InitialDirContext(env);
-
-
         return ctx;
     }
 }

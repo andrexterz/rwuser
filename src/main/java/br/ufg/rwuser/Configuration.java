@@ -25,10 +25,10 @@ public class Configuration {
 
     protected static Configuration instance;
 
-    public static final String INITIAL_CTX = "com.sun.jndi.ldap.LdapCtxFactory";
-    public static final String SERVIDOR = "ldap://200.137.197.214:389";
-    public static final String SEARCHBASE = "ou=Users, dc=dionisio, dc=inf, dc=ufg, dc=br";
-    public static final String BASE_DN = "dc=dionisio, dc=inf, dc=ufg, dc=br";
+    public static final String initialContext = "com.sun.jndi.ldap.LdapCtxFactory";
+    public static final String ldapServer = "ldap://200.137.197.214:389";
+    public static final String searchBase = "ou=Users, dc=dionisio, dc=inf, dc=ufg, dc=br";
+    public static final String baseDN = "dc=dionisio, dc=inf, dc=ufg, dc=br";
 
     public static Configuration getInstance() {
         if (instance == null) {
