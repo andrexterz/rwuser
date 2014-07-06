@@ -11,7 +11,7 @@ import java.util.Properties;
  */
 public class Configuration {
     
-    private Properties config;
+    private final Properties config;
     
     private Configuration() {
         config = new Properties();

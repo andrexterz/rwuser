@@ -42,16 +42,18 @@ public class Shell {
         }
         if (userMap.size() > 0) {
             LdapInfo newUser = userMap.get(username);
-            PreparedStatement userQuery = con.prepareStatement("insert into usuario (login, matricula, nome, email) values (?, ?, ?, ?)");
-            userQuery.setString(1, newUser.getUsuario());
-            userQuery.setString(2, newUser.getMatricula());
-            userQuery.setString(3, newUser.getNome());
-            userQuery.setString(4, newUser.getEmail());
+            PreparedStatement userQuery = con.prepareStatement("insert into usuario (version, login, matricula, nome, email) values (?, ?, ?, ?, ?)");
+            userQuery.setLong(1, 0);
+            userQuery.setString(2, newUser.getUsuario());
+            userQuery.setString(3, newUser.getMatricula());
+            userQuery.setString(4, newUser.getNome());
+            userQuery.setString(5, newUser.getEmail());
             userQuery.execute();
             
-            PreparedStatement profileQuery = con.prepareStatement("insert into perfil (tipoperfil, usuario_id) values (?, (select id from usuario where login = ?))");
-            profileQuery.setString(1, PerfilEnum.ADMINISTRADOR.name());            
-            profileQuery.setString(2, newUser.getUsuario());            
+            PreparedStatement profileQuery = con.prepareStatement("insert into perfil (version, tipoperfil, usuario_id) values (?, ?, (select id from usuario where login = ?))");
+            profileQuery.setLong(1, 0);
+            profileQuery.setString(2, PerfilEnum.ADMINISTRADOR.name());            
+            profileQuery.setString(3, newUser.getUsuario());            
             profileQuery.execute();
             
             return String.format("the user <%s> was added.\n", username);
